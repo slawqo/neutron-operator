@@ -1,0 +1,27 @@
+# permissions for end users to view neutrondhcpagents.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: neutrondhcpagent-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: neutron-operator
+    app.kubernetes.io/part-of: neutron-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: neutrondhcpagent-viewer-role
+rules:
+- apiGroups:
+  - neutron.openstack.org
+  resources:
+  - neutrondhcpagents
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - neutron.openstack.org
+  resources:
+  - neutrondhcpagents/status
+  verbs:
+  - get

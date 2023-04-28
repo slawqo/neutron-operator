@@ -128,6 +128,14 @@ func main() {
 		os.Exit(1)
 	}
 
+	if err = (&controllers.NeutronDHCPAgentReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "NeutronDHCPAgent")
+		os.Exit(1)
+	}
+
 	// Acquire environmental defaults and initialize NeutronAPI defaults with them
 	neutronAPIDefaults := neutronv1beta1.NeutronAPIDefaults{
 		ContainerImageURL: os.Getenv("NEUTRON_API_IMAGE_URL_DEFAULT"),
@@ -135,9 +143,20 @@ func main() {
 
 	neutronv1beta1.SetupNeutronAPIDefaults(neutronAPIDefaults)
 
+	// Acquire environmental defaults and initialize NeutronDHCPAgent defaults with them
+	neutronDhcpAgentDefaults := neutronv1beta1.NeutronDhcpAgentDefaults{
+		ContainerImageURL: os.Getenv("NEUTRON_DHCP_AGENT_IMAGE_URL_DEFAULT"),
+	}
+
+	neutronv1beta1.SetupNeutronDhcpAgentDefaults(neutronDhcpAgentDefaults)
+
 	// Setup webhooks if requested
 	if strings.ToLower(os.Getenv("ENABLE_WEBHOOKS")) != "false" {
 		if err = (&neutronv1beta1.NeutronAPI{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "NeutronAPI")
+			os.Exit(1)
+		}
+		if err = (&neutronv1beta1.NeutronDHCPAgent{}).SetupWebhookWithManager(mgr); err != nil {
 			setupLog.Error(err, "unable to create webhook", "webhook", "NeutronAPI")
 			os.Exit(1)
 		}

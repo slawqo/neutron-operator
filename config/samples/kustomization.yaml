@@ -1,4 +1,5 @@
 ## Append samples you want in your CSV to this file as resources ##
 resources:
 - neutron_v1beta1_neutronapi.yaml
+- neutron_v1beta1_neutrondhcpagent.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

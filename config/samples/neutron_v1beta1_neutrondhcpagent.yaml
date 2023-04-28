@@ -1,0 +1,13 @@
+apiVersion: neutron.openstack.org/v1beta1
+kind: NeutronDHCPAgent
+metadata:
+  name: neutrondhcpagent
+  namespace: openstack
+spec:
+  customServiceConfig: |
+    [DEFAULT]
+    debug = true
+  rabbitMqClusterName: rabbitmq
+  debug:
+    service: false
+  containerImage: quay.io/podified-antelope-centos9/openstack-neutron-dhcp-agent:current-podified

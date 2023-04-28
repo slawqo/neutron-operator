@@ -1,0 +1,23 @@
+{
+  "command": "/usr/bin/neutron-dhcp-agent --config-file /usr/share/neutron/neutron-dist.conf --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/dhcp_agent.ini --config-dir /etc/neutron/neutron.conf.d",
+  "config_files": [
+    {
+      "source": "/var/lib/config-data/neutron.conf",
+      "dest": "/etc/neutron/neutron.conf",
+      "owner": "root:neutron",
+      "perm": "0640"
+    },
+    {
+      "source": "/var/lib/config-data/dhcp_agent.ini",
+      "dest": "/etc/neutron/dhcp_agent.ini",
+      "owner": "root:neutron",
+      "perm": "0640"
+    },
+    {
+      "source": "/var/lib/config-data/custom.conf",
+      "dest": "/etc/neutron/neutron.conf.d/custom.conf",
+      "owner": "root:neutron",
+      "perm": "0640"
+    }
+  ]
+}

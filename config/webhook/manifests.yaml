@@ -25,6 +25,26 @@ webhooks:
     resources:
     - neutronapis
   sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /mutate-neutron-openstack-org-v1beta1-neutrondhcpagent
+  failurePolicy: Fail
+  name: mneutrondhcpagent.kb.io
+  rules:
+  - apiGroups:
+    - neutron.openstack.org
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - neutrondhcpagents
+  sideEffects: None
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -51,4 +71,24 @@ webhooks:
     - UPDATE
     resources:
     - neutronapis
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-neutron-openstack-org-v1beta1-neutrondhcpagent
+  failurePolicy: Fail
+  name: vneutrondhcpagent.kb.io
+  rules:
+  - apiGroups:
+    - neutron.openstack.org
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - neutrondhcpagents
   sideEffects: None

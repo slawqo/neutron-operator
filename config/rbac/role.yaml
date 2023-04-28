@@ -173,6 +173,32 @@ rules:
   - patch
   - update
 - apiGroups:
+  - neutron.openstack.org
+  resources:
+  - neutrondhcpagents
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - neutron.openstack.org
+  resources:
+  - neutrondhcpagents/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - neutron.openstack.org
+  resources:
+  - neutrondhcpagents/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - ovn.openstack.org
   resources:
   - ovndbclusters
